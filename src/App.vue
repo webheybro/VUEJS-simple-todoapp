@@ -22,21 +22,16 @@ export default {
   setup() {
     let technos = ref([]);
     const saveTechno = function (data) {
-      console.log("App | saveTechno() | data", data);
       technos.value = [...technos.value, { name: data, id: Date.now() }];
-      console.log("App | saveTechno() | technos.value", technos.value);
     };
 
     const editTechno = function (tech) {
       technos.value = technos.value.map((item) =>
         item.id === tech.id ? tech : item
       );
-      console.log("App | editTechno() | techno", tech);
     };
 
     const deleteTechno = function (tech) {
-      console.log("App | deleteTechno() | tech", tech);
-
       technos.value = technos.value.filter((item) => item.id != tech.id);
     };
 
