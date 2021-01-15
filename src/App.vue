@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <h1>Veille techno</h1>
-    <Form @add="saveTechno" />
+  <div id="app">
+    <h1>Todos list</h1>
+    <Form @add="saveTodos" />
     <br />
     <List
-      :technos="technos"
-      @delete-techno="deleteTechno"
-      @edit-techno="editTechno"
+      :todos="todos"
+      @delete-todo="deleteTodos"
+      @edit-todo="editTodos"
     />
   </div>
 </template>
@@ -20,22 +20,22 @@ export default {
   name: "App",
   components: { Form, List },
   setup() {
-    let technos = ref([]);
-    const saveTechno = function (data) {
-      technos.value = [...technos.value, { name: data, id: Date.now() }];
+    let todos = ref([]);
+    const saveTodos = function (data) {
+      todos.value = [...todos.value, { name: data, id: Date.now() }];
     };
 
-    const editTechno = function (tech) {
-      technos.value = technos.value.map((item) =>
-        item.id === tech.id ? tech : item
+    const editTodos = function (tech) {
+      todos.value = todos.value.map((item) =>
+        item?.id === tech.id ? tech : item
       );
     };
 
-    const deleteTechno = function (tech) {
-      technos.value = technos.value.filter((item) => item.id != tech.id);
+    const deleteTodos = function (tech) {
+      todos.value = todos.value.filter((item) => item?.id !== tech.id);
     };
 
-    return { saveTechno, editTechno, deleteTechno, technos };
+    return { saveTodos, editTodos, deleteTodos, todos };
   },
 };
 </script>
@@ -52,7 +52,7 @@ export default {
 ul {
   list-style: none;
   text-align: left;
-  margin-left: 0px;
-  padding-left: 0px;
+  margin-left: 0;
+  padding-left: 0;
 }
 </style>

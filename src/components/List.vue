@@ -1,18 +1,18 @@
 <template>
   <div class="list">
     <ul>
-      <li v-for="tech in technos" :key="tech.id">
-        <button @click="editTechno(tech)">Edit</button>
-        <button @click="deleteTechno(tech)">Delete</button>
-        <span v-if="technoToEdit !== null && technoToEdit.id === tech.id">
+      <li v-for="todo in todos" :key="todo.id">
+        <button @click="editTodo(todo)">Edit</button>
+        <button @click="deleteTodo(todo)">Delete</button>
+        <span v-if="todoToEdit !== null && todoToEdit.id === todo.id">
           <input
             type="text"
-            v-model="technoToEdit.name"
-            @keypress.enter="updateTechno"
+            v-model="todoToEdit.name"
+            @keypress.enter="updateTodo"
           />
-          <button @click="updateTechno">update</button>
+          <button @click="updateTodo">update</button>
         </span>
-        <span v-else>{{ tech.name }}</span>
+        <span v-else>{{ todo.name }}</span>
       </li>
     </ul>
   </div>
@@ -21,26 +21,25 @@
 <script>
 import { ref } from "vue";
 export default {
-  emits: ["delete-techno", "edit-techno"],
+  emits: ["delete-todo", "edit-todo"],
   props: {
-    technos: {
+    todos: {
       type: Array,
       required: true,
     },
   },
   setup(props, { emit }) {
-    let deleteTechno = (tech) => emit("delete-techno", tech);
+    let deleteTodo = (todo) => emit("delete-todo", todo);
 
-    let technoToEdit = ref(null);
-    let editTechno = function (tech) {
-      technoToEdit.value = tech;
-    };
-    let updateTechno = function () {
-      emit("edit-techno", technoToEdit.value);
-      technoToEdit.value = null;
+    let todoToEdit = ref(null);
+
+    let editTodo =  (todo) => todoToEdit.value = todo;
+    let updateTodo = function () {
+      emit("edit-todo", todoToEdit.value);
+      todoToEdit.value = null;
     };
 
-    return { deleteTechno, editTechno, updateTechno, technoToEdit };
+    return { deleteTodo, editTodo, updateTodo, todoToEdit };
   },
 };
 </script>
